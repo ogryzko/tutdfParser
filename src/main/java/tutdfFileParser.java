@@ -4,21 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.lang.String.valueOf;
 
 /**
  * Created by EGlushchenko on 27.07.2017.
  */
 public class tutdfFileParser {
-    private static final int IDSEGMENT_MAX_COUNT = 99;
-    private static final int PHONENUMBERSEGMENT_MAX_COUNT = 5; // todo выяснить все-таки это максимум или единственное возможное количество
-    private static final int TUTDF_SEGMENT_FIELDS_NUMBER = 8;
 
     private static final String TUTDF_LOG_TAG = "@TUTDF: " ;
     private static final String TR_LOG_TAG = "@TR: " ;
@@ -32,12 +29,13 @@ public class tutdfFileParser {
     private static final int NUM_TR_FIELDS = 42;
     private static final int NUM_TUTDF_FIELDS = 8;
     private static final int NUM_TRLR_FIELDS = 2;
+    private static final String UNKNOWN_LOG_TAG = "@UNKNOWN: ";
 
     private  final SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
     private static final String NEWLINE = System.getProperty("line.separator");
-    tutdfEntry currentEntry;
+    private tutdfEntry currentEntry;
 
-    Logger log = Logger.getLogger(tutdfFileParser.class.getName());
+    private Logger log = Logger.getLogger(tutdfFileParser.class.getName());
 
     private tutdfData data;
 
@@ -52,14 +50,14 @@ public class tutdfFileParser {
 
     public tutdfData parseTUTDFFile(BufferedReader reader) throws IOException, ParseException {
         String currentLine = null;
-        tutdfEntry currentEntry = null;
+        currentEntry = null;
 
         data = new tutdfData();
 
         while ((currentLine = reader.readLine()) != null){
             if(currentLine.equals("") ||
                     currentLine.equals(NEWLINE)){
-                ///
+                continue;
             }
             switch (segmentTagFromLine(currentLine)){
                 case TUTDF:
@@ -84,7 +82,7 @@ public class tutdfFileParser {
                     tutdfUNKNOWNHandler(currentLine);
                     break;
                 default:
-                    ///////
+                    // todo
                     break;
 
             }
@@ -94,7 +92,7 @@ public class tutdfFileParser {
     }
 
     private void tutdfUNKNOWNHandler(String currentLine) {
-        // todo
+        log.log(Level.INFO, UNKNOWN_LOG_TAG + "Unexpected segment occurrence!");
     }
 
     private void tutdfTRLRHandler(String currentLine) {
@@ -237,6 +235,7 @@ public class tutdfFileParser {
         int type = Integer.parseInt(typeString);
         phoneNumberSegment.setType(type);
 
+        currentEntry.getPhoneNumberSegmentList().add(phoneNumberSegment);
     }
 
     private void tutdfTRHandler(String currentLine) throws ParseException {
@@ -458,7 +457,7 @@ public class tutdfFileParser {
             throw new IOException ("input stream is null!");
         }
 
-        reader = new BufferedReader (new InputStreamReader(inStream));
+        reader = new BufferedReader (new InputStreamReader(inStream, Charset.forName("windows-1251") ));
         return reader;
 
     }
