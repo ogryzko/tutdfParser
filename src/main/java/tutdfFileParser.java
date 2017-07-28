@@ -33,26 +33,26 @@ public class tutdfFileParser {
 
     private  final SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
     private static final String NEWLINE = System.getProperty("line.separator");
-    private tutdfEntry currentEntry;
+    private TUTDFEntry currentEntry;
 
     private Logger log = Logger.getLogger(tutdfFileParser.class.getName());
 
-    private tutdfData data;
+    private TUTDFData data;
 
     public tutdfFileParser(){
-        data = new tutdfData();
+        data = new TUTDFData();
     }
 
-    public tutdfData parseTUTDFFile(InputStream inStream) throws IOException, ParseException {
+    public TUTDFData parseTUTDFFile(InputStream inStream) throws IOException, ParseException {
         BufferedReader reader = getBufferedReader(inStream);
         return parseTUTDFFile(reader);
     }
 
-    public tutdfData parseTUTDFFile(BufferedReader reader) throws IOException, ParseException {
+    public TUTDFData parseTUTDFFile(BufferedReader reader) throws IOException, ParseException {
         String currentLine = null;
         currentEntry = null;
 
-        data = new tutdfData();
+        data = new TUTDFData();
 
         while ((currentLine = reader.readLine()) != null){
             if(currentLine.equals("") ||
@@ -399,7 +399,7 @@ public class tutdfFileParser {
     private void tutdfTUTDFHandler(String currentLine) throws ParseException {
 
         if(currentEntry == null){
-            currentEntry = new tutdfEntry();
+            currentEntry = new TUTDFEntry();
         } else{
             log.log(Level.INFO, TUTDF_LOG_TAG + "Unexpected entry header!");
             return;

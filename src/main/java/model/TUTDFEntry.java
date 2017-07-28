@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by EGlushchenko on 27.07.2017.
  */
-public class tutdfEntry {
+public class TUTDFEntry {
     private HeaderSegment headerSegment;
     private List<IDSegment> idSegmentList = new ArrayList<IDSegment>();
     private NameSegment nameSegment;

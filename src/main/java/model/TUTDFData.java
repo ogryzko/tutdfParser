@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * Created by EGlushchenko on 28.07.2017.
  */
-public class tutdfData {
-    List<tutdfEntry> tutdfEntryList = new ArrayList<tutdfEntry>();
+public class TUTDFData {
+    List<TUTDFEntry> tutdfEntryList = new ArrayList<TUTDFEntry>();
 
-    public List<tutdfEntry> getTutdfEntryList() {
+    public List<TUTDFEntry> getTutdfEntryList() {
         return tutdfEntryList;
     }
 
-    public void setTutdfEntryList(List<tutdfEntry> tutdfEntryList) {
+    public void setTutdfEntryList(List<TUTDFEntry> tutdfEntryList) {
         this.tutdfEntryList = tutdfEntryList;
     }
 }
