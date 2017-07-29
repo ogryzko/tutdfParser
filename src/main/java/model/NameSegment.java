@@ -124,4 +124,48 @@ public class NameSegment {
     public void setOldFirstName(String oldFirstName) {
         this.oldFirstName = oldFirstName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NameSegment)) return false;
+
+        NameSegment that = (NameSegment) o;
+
+        if (getEmptyField1() != that.getEmptyField1()) return false;
+        if (getEmptyField3() != that.getEmptyField3()) return false;
+        if (getEmptyField4() != that.getEmptyField4()) return false;
+        if (getRemarks() != that.getRemarks()) return false;
+        if (!getSegmentTag().equals(that.getSegmentTag())) return false;
+        if (!getSurname().equals(that.getSurname())) return false;
+        if (getPatronymicName() != null ? !getPatronymicName().equals(that.getPatronymicName()) : that.getPatronymicName() != null)
+            return false;
+        if (!getFirstName().equals(that.getFirstName())) return false;
+        if (!getDateOfBirth().equals(that.getDateOfBirth())) return false;
+        if (!getPlaceOfBirth().equals(that.getPlaceOfBirth())) return false;
+        if (getEmptyField2() != null ? !getEmptyField2().equals(that.getEmptyField2()) : that.getEmptyField2() != null)
+            return false;
+        if (getOldSurname() != null ? !getOldSurname().equals(that.getOldSurname()) : that.getOldSurname() != null)
+            return false;
+        return getOldFirstName() != null ? getOldFirstName().equals(that.getOldFirstName()) : that.getOldFirstName() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getSegmentTag().hashCode();
+        result = 31 * result + getSurname().hashCode();
+        result = 31 * result + (getPatronymicName() != null ? getPatronymicName().hashCode() : 0);
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getEmptyField1();
+        result = 31 * result + getDateOfBirth().hashCode();
+        result = 31 * result + getPlaceOfBirth().hashCode();
+        result = 31 * result + (getEmptyField2() != null ? getEmptyField2().hashCode() : 0);
+        result = 31 * result + getEmptyField3();
+        result = 31 * result + getEmptyField4();
+        result = 31 * result + getRemarks();
+        result = 31 * result + (getOldSurname() != null ? getOldSurname().hashCode() : 0);
+        result = 31 * result + (getOldFirstName() != null ? getOldFirstName().hashCode() : 0);
+        return result;
+    }
 }

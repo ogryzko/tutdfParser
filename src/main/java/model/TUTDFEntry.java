@@ -61,4 +61,33 @@ public class TUTDFEntry {
     public void setTrlrSegment(TRLRSegment trlrSegment) {
         this.trlrSegment = trlrSegment;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TUTDFEntry)) return false;
+
+        TUTDFEntry that = (TUTDFEntry) o;
+
+        if (!getHeaderSegment().equals(that.getHeaderSegment())) return false;
+        if (!getIdSegmentList().equals(that.getIdSegmentList())) return false;
+        if (getNameSegment() != null ? !getNameSegment().equals(that.getNameSegment()) : that.getNameSegment() != null)
+            return false;
+        if (!getPhoneNumberSegmentList().equals(that.getPhoneNumberSegmentList())) return false;
+        if (getTransactionSegment() != null ? !getTransactionSegment().equals(that.getTransactionSegment()) : that.getTransactionSegment() != null)
+            return false;
+        return getTrlrSegment().equals(that.getTrlrSegment());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getHeaderSegment().hashCode();
+        result = 31 * result + getIdSegmentList().hashCode();
+        result = 31 * result + (getNameSegment() != null ? getNameSegment().hashCode() : 0);
+        result = 31 * result + getPhoneNumberSegmentList().hashCode();
+        result = 31 * result + (getTransactionSegment() != null ? getTransactionSegment().hashCode() : 0);
+        result = 31 * result + getTrlrSegment().hashCode();
+        return result;
+    }
 }

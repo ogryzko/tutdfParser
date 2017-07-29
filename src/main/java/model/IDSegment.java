@@ -78,4 +78,40 @@ public class IDSegment {
     public void setIssueAuthority(String issueAuthority) {
         this.issueAuthority = issueAuthority;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IDSegment)) return false;
+
+        IDSegment idSegment = (IDSegment) o;
+
+        if (getIdType() != idSegment.getIdType()) return false;
+        if (!getSegmentTag().equals(idSegment.getSegmentTag())) return false;
+        if (getSeriesNumber() != null ? !getSeriesNumber().equals(idSegment.getSeriesNumber()) : idSegment.getSeriesNumber() != null)
+            return false;
+        if (getIdNumber() != null ? !getIdNumber().equals(idSegment.getIdNumber()) : idSegment.getIdNumber() != null)
+            return false;
+        if (getIssueDate() != null ? !getIssueDate().equals(idSegment.getIssueDate()) : idSegment.getIssueDate() != null)
+            return false;
+        if (getIssueAuthority() != null ? !getIssueAuthority().equals(idSegment.getIssueAuthority()) : idSegment.getIssueAuthority() != null)
+            return false;
+        if (getIssueLocation() != null ? !getIssueLocation().equals(idSegment.getIssueLocation()) : idSegment.getIssueLocation() != null)
+            return false;
+        return getOldIDNumber() != null ? getOldIDNumber().equals(idSegment.getOldIDNumber()) : idSegment.getOldIDNumber() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getSegmentTag().hashCode();
+        result = 31 * result + getIdType();
+        result = 31 * result + (getSeriesNumber() != null ? getSeriesNumber().hashCode() : 0);
+        result = 31 * result + (getIdNumber() != null ? getIdNumber().hashCode() : 0);
+        result = 31 * result + (getIssueDate() != null ? getIssueDate().hashCode() : 0);
+        result = 31 * result + (getIssueAuthority() != null ? getIssueAuthority().hashCode() : 0);
+        result = 31 * result + (getIssueLocation() != null ? getIssueLocation().hashCode() : 0);
+        result = 31 * result + (getOldIDNumber() != null ? getOldIDNumber().hashCode() : 0);
+        return result;
+    }
 }

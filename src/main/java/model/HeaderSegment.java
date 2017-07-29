@@ -78,4 +78,36 @@ public class HeaderSegment {
     public void setMemberData(String memberData) {
         this.memberData = memberData;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof HeaderSegment)) return false;
+
+        HeaderSegment that = (HeaderSegment) o;
+
+        if (!getSegmentTag().equals(that.getSegmentTag())) return false;
+        if (!getVersion().equals(that.getVersion())) return false;
+        if (!getVersionDate().equals(that.getVersionDate())) return false;
+        if (!getMemberCode().equals(that.getMemberCode())) return false;
+        if (getCycleIdentification() != null ? !getCycleIdentification().equals(that.getCycleIdentification()) : that.getCycleIdentification() != null)
+            return false;
+        if (!getReportDate().equals(that.getReportDate())) return false;
+        if (!getAuthorizationCode().equals(that.getAuthorizationCode())) return false;
+        return getMemberData() != null ? getMemberData().equals(that.getMemberData()) : that.getMemberData() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getSegmentTag().hashCode();
+        result = 31 * result + getVersion().hashCode();
+        result = 31 * result + getVersionDate().hashCode();
+        result = 31 * result + getMemberCode().hashCode();
+        result = 31 * result + (getCycleIdentification() != null ? getCycleIdentification().hashCode() : 0);
+        result = 31 * result + getReportDate().hashCode();
+        result = 31 * result + getAuthorizationCode().hashCode();
+        result = 31 * result + (getMemberData() != null ? getMemberData().hashCode() : 0);
+        return result;
+    }
 }

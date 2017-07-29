@@ -14,6 +14,7 @@ public class TUTDFFileParserTest {
     @Before
     public void init(){
         parser = new TUTDFFileParser();
+        TUTDFData sampleBC = new TUTDFData();
     }
 
     @Test

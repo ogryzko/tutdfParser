@@ -22,4 +22,23 @@ public class TRLRSegment {
     public void setCounter(int counter) {
         Counter = counter;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TRLRSegment)) return false;
+
+        TRLRSegment that = (TRLRSegment) o;
+
+        if (getCounter() != that.getCounter()) return false;
+        return getTrailerSegment().equals(that.getTrailerSegment());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTrailerSegment().hashCode();
+        result = 31 * result + getCounter();
+        return result;
+    }
 }
