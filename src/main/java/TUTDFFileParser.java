@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 /**
  * Created by EGlushchenko on 27.07.2017.
  */
-public class tutdfFileParser {
+public class TUTDFFileParser {
 
     private static final String TUTDF_LOG_TAG = "@TUTDF: " ;
     private static final String TR_LOG_TAG = "@TR: " ;
@@ -35,11 +35,11 @@ public class tutdfFileParser {
     private static final String NEWLINE = System.getProperty("line.separator");
     private TUTDFEntry currentEntry;
 
-    private Logger log = Logger.getLogger(tutdfFileParser.class.getName());
+    private Logger log = Logger.getLogger(TUTDFFileParser.class.getName());
 
     private TUTDFData data;
 
-    public tutdfFileParser(){
+    public TUTDFFileParser(){
         data = new TUTDFData();
     }
 
@@ -92,7 +92,7 @@ public class tutdfFileParser {
     }
 
     private void tutdfUNKNOWNHandler(String currentLine) {
-        log.log(Level.INFO, UNKNOWN_LOG_TAG + "Unexpected segment occurrence!");
+        if (currentEntry == null) log.log(Level.INFO, UNKNOWN_LOG_TAG + "Unexpected segment occurrence!");
     }
 
     private void tutdfTRLRHandler(String currentLine) {
