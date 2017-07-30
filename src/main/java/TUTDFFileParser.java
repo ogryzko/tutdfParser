@@ -24,11 +24,11 @@ public class TUTDFFileParser {
     private static final String NA_LOG_TAG = "@NA: ";
     private static final String PN_LOG_TAG = "@PN: ";
     
-    private static final int NUM_ID_FIELDS = 8;
-    private static final int NUM_NA_FIELDS = 13;
-    private static final int NUM_TR_FIELDS = 42;
-    private static final int NUM_TUTDF_FIELDS = 8;
-    private static final int NUM_TRLR_FIELDS = 2;
+    private static final Integer NUM_ID_FIELDS = 8;
+    private static final Integer NUM_NA_FIELDS = 13;
+    private static final Integer NUM_TR_FIELDS = 42;
+    private static final Integer NUM_TUTDF_FIELDS = 8;
+    private static final Integer NUM_TRLR_FIELDS = 2;
     private static final String UNKNOWN_LOG_TAG = "@UNKNOWN: ";
 
     private  final SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
@@ -118,13 +118,14 @@ public class TUTDFFileParser {
 
         setMandatoryTrailerSegmentFields(strArr[0], trlrSegment);
 
-        setOptionalTrailerSegmentFields(strArr[1]);
+        setOptionalTrailerSegmentFields(strArr[1], trlrSegment);
         return trlrSegment;
     }
 
-    private void setOptionalTrailerSegmentFields(String s) {
+    private void setOptionalTrailerSegmentFields(String s, TRLRSegment trlrSegment) {
         String counterString = s;
-        Integer counter = Integer.parseInt(counterString);
+        Integer counter = parseOptionalNumericalField(counterString);
+        trlrSegment.setCounter(counter);
     }
 
     private void setMandatoryTrailerSegmentFields(String s, TRLRSegment trlrSegment) {
@@ -174,7 +175,7 @@ public class TUTDFFileParser {
         idSegment.setIdNumber(idNumber);
 
         String issueDateString = strArr[4];
-        Date issueDate = sdf.parse(issueDateString);
+        Date issueDate = parseOptionalDateField(issueDateString);
         idSegment.setIssueDate(issueDate);
 
         String issueAuthority = strArr[5];
@@ -186,7 +187,7 @@ public class TUTDFFileParser {
         idSegment.setSegmentTag(segmentTag);
 
         String idTypeString = strArr[1];
-        int idType = Integer.parseInt(idTypeString);
+        Integer idType = Integer.parseInt(idTypeString);
         idSegment.setIdType(idType);
     }
 
@@ -219,21 +220,21 @@ public class TUTDFFileParser {
         String patronymicName = strArr[2]; // O
         nameSegment.setPatronymicName(patronymicName);
         String emptyField1String = strArr[4]; // O
-        int emptyField1 = Integer.parseInt(emptyField1String); // todo ask about "empty numeric field"...
+        Integer emptyField1 = parseOptionalNumericalField(emptyField1String); // todo ask about "empty numeric field"...
         nameSegment.setEmptyField1(emptyField1);
         String emptyField2 = strArr[7]; // O
         nameSegment.setEmptyField2(emptyField2);
 
         String emptyField3String = strArr[8]; // O
-        int emptyField3 = Integer.parseInt(emptyField3String);
+        Integer emptyField3 = parseOptionalNumericalField(emptyField3String);
         nameSegment.setEmptyField3(emptyField3);
 
         String emptyField4String = strArr[9]; // O
-        int emptyField4 = Integer.parseInt(emptyField4String);
+        Integer emptyField4 = parseOptionalNumericalField(emptyField4String);
         nameSegment.setEmptyField4(emptyField4);
 
         String remarksString = strArr[10]; // O
-        int remarks = Integer.parseInt(remarksString);
+        Integer remarks = parseOptionalNumericalField(remarksString);
         nameSegment.setRemarks(remarks);
 
         String oldSurname = strArr[11]; // O
@@ -289,7 +290,7 @@ public class TUTDFFileParser {
 
     private void setConditionalPhoneNumberSegmentFields(String s, PhoneNumberSegment phoneNumberSegment) {
         String typeString = s; // C
-        int type = Integer.parseInt(typeString);
+        Integer type = Integer.parseInt(typeString);
         phoneNumberSegment.setType(type);
     }
 
@@ -335,28 +336,30 @@ public class TUTDFFileParser {
         transactionSegment.setOldAccountNumber(oldAccountNumber);
     }
 
-    private void setConditionalTransactionSegmentFields(String[] strArr, TransactionSegment transactionSegment) throws ParseException {
+    private void setConditionalTransactionSegmentFields(String[] strArr,
+                                                        TransactionSegment transactionSegment) throws ParseException {
         String accountTypeString = strArr[3]; // C
-        int accountType = Integer.parseInt(accountTypeString);
+        Integer accountType = parseOptionalNumericalField(accountTypeString);
         transactionSegment.setAccountType(accountType);
+
         String dateAccountOpenedString = strArr[5]; // C
-        Date dateAccountOpened = sdf.parse(dateAccountOpenedString);
+        Date dateAccountOpened = parseOptionalDateField(dateAccountOpenedString);
         transactionSegment.setDateAccountOpened(dateAccountOpened);
 
         String dateOfLastPaymentString = strArr[6]; // C
-        Date dateOfLastPayment = sdf.parse(dateOfLastPaymentString);
+        Date dateOfLastPayment = parseOptionalDateField(dateOfLastPaymentString);
         transactionSegment.setDateOfLastPayment(dateOfLastPayment);
 
         String accountRatingString = strArr[7]; // C
-        int accountRating = Integer.parseInt(accountRatingString);
+        Integer accountRating = parseOptionalNumericalField(accountRatingString);
         transactionSegment.setAccountRating(accountRating);
 
         String dateAccountRatingString = strArr[8]; // C
-        Date dateAccountRating = sdf.parse(dateAccountRatingString);
+        Date dateAccountRating = parseOptionalDateField(dateAccountRatingString);
         transactionSegment.setDateAccountRating(dateAccountRating);
 
         String dateReportedString = strArr[9]; // C
-        Date dateReported = sdf.parse(dateReportedString);
+        Date dateReported = parseOptionalDateField(dateReportedString);
         transactionSegment.setDateReported(dateReported);
 
         String creditLimit = strArr[10]; // C
@@ -372,7 +375,7 @@ public class TUTDFFileParser {
         transactionSegment.setNextPayment(nextPayment);
 
         String creditPaymentFrequencyString = strArr[14]; // C
-        int creditPaymentFrequency = Integer.parseInt(creditPaymentFrequencyString);
+        Integer creditPaymentFrequency = parseOptionalNumericalField(creditPaymentFrequencyString);
         transactionSegment.setCreditPaymentFrequency(creditPaymentFrequency);
 
         String mop = strArr[15]; // C
@@ -382,23 +385,23 @@ public class TUTDFFileParser {
         transactionSegment.setCurrencyCode(currencyCode);
 
         String collateralCodeString = strArr[17]; // C
-        int collateralCode = Integer.parseInt(collateralCodeString);
+        Integer collateralCode = parseOptionalNumericalField(collateralCodeString);
         transactionSegment.setCollateralCode(collateralCode);
 
         String dateOfContractTerminationString = strArr[18]; // C
-        Date dateOfContractTermination = sdf.parse(dateOfContractTerminationString);
+        Date dateOfContractTermination = parseOptionalDateField(dateOfContractTerminationString);
         transactionSegment.setDateOfContractTermination(dateOfContractTermination);
 
         String datePaymentDueString = strArr[19]; // C
-        Date datePaymentDue = sdf.parse(datePaymentDueString);
+        Date datePaymentDue = parseOptionalDateField(datePaymentDueString);
         transactionSegment.setDatePaymentDue(datePaymentDue);
 
         String dateInterestPaymentDueString = strArr[20]; // C
-        Date dateInterestPaymentDue = sdf.parse(dateInterestPaymentDueString);
+        Date dateInterestPaymentDue = parseOptionalDateField(dateInterestPaymentDueString);
         transactionSegment.setDatePaymentDue(dateInterestPaymentDue);
 
         String interestPaymentFrequencyString = strArr[21]; // C
-        int interestPaymentFrequency = Integer.parseInt(interestPaymentFrequencyString);
+        Integer interestPaymentFrequency = parseOptionalNumericalField(interestPaymentFrequencyString);
         transactionSegment.setInterestPaymentFrequency(interestPaymentFrequency);
 
 
@@ -415,7 +418,7 @@ public class TUTDFFileParser {
         transactionSegment.setGuaranteeSum(guaranteeSum);
 
         String guaranteeTemString = strArr[28]; // C
-        Date guaranteeTem = sdf.parse(guaranteeTemString);
+        Date guaranteeTem = parseOptionalDateField(guaranteeTemString);
         transactionSegment.setGuaranteeTem(guaranteeTem);
 
         String bankGuaranteeIndicator = strArr[29]; // C
@@ -434,11 +437,11 @@ public class TUTDFFileParser {
         transactionSegment.setCollateralValue(collateralValue);
 
         String collateralDateString  = strArr[34]; // C
-        Date collateralDate = sdf.parse(collateralDateString);
+        Date collateralDate = parseOptionalDateField(collateralDateString);
         transactionSegment.setCollateralDate(collateralDate);
 
         String collateralAgreementExpirationDateString = strArr[35]; // С
-        Date collateralAgreementExpirationDate = sdf.parse(collateralAgreementExpirationDateString);
+        Date collateralAgreementExpirationDate = parseOptionalDateField(collateralAgreementExpirationDateString);
         transactionSegment.setCollateralAgreementExpirationDate(collateralAgreementExpirationDate);
 
         String overallValueOfCredit = strArr[36]; // С
@@ -451,15 +454,15 @@ public class TUTDFFileParser {
         transactionSegment.setRightOfClaimAcquirersRegistrationData(rightOfClaimAcquirersRegistrationData);
 
         String rightOfClaimAcquirersTaxpayerIDString = strArr[39]; // С
-        int rightOfClaimAcquirersTaxpayerID = Integer.parseInt(rightOfClaimAcquirersTaxpayerIDString);
+        Integer rightOfClaimAcquirersTaxpayerID = parseOptionalNumericalField(rightOfClaimAcquirersTaxpayerIDString);
         transactionSegment.setRightOfClaimAcquirersTaxpayerID(rightOfClaimAcquirersTaxpayerID);
 
         String rightOfClaimAcquirersSocialInsuranceNumberString = strArr[40]; // С
-        int rightOfClaimAcquirersSocialInsuranceNumber = Integer.parseInt(rightOfClaimAcquirersSocialInsuranceNumberString);
+        Integer rightOfClaimAcquirersSocialInsuranceNumber = parseOptionalNumericalField(rightOfClaimAcquirersSocialInsuranceNumberString);
         transactionSegment.setRightOfClaimAcquirersSocialInsuranceNumber(rightOfClaimAcquirersSocialInsuranceNumber);
 
         String completePerformanceOfObligationsDateString = strArr[41]; // С
-        Date completePerformanceOfObligationsDate = sdf.parse(completePerformanceOfObligationsDateString);
+        Date completePerformanceOfObligationsDate = parseOptionalDateField(completePerformanceOfObligationsDateString);
         transactionSegment.setCompletePerformanceOfObligationsDate(completePerformanceOfObligationsDate);
     }
 
@@ -475,7 +478,7 @@ public class TUTDFFileParser {
 
 
         String accountRelationshipString = strArr[4]; // M
-        int accountRelationship = Integer.parseInt(accountRelationshipString);
+        Integer accountRelationship = Integer.parseInt(accountRelationshipString);
         transactionSegment.setAccountRelationship(accountRelationship);
     }
 
@@ -560,5 +563,13 @@ public class TUTDFFileParser {
         reader = new BufferedReader (new InputStreamReader(inStream, Charset.forName("windows-1251") ));
         return reader;
 
+    }
+
+    private Integer parseOptionalNumericalField(String field){
+        return field.equals("") ? null : Integer.parseInt(field);
+    }
+    
+    private Date parseOptionalDateField(String field) throws ParseException {
+        return field.equals("") ? null : sdf.parse(field);
     }
 }

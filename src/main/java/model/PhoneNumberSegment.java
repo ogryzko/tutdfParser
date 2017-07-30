@@ -24,7 +24,7 @@ public class PhoneNumberSegment {
         this.number = number;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
@@ -39,9 +39,9 @@ public class PhoneNumberSegment {
 
         PhoneNumberSegment that = (PhoneNumberSegment) o;
 
-        if (getType() != that.getType()) return false;
         if (!getSegmentTag().equals(that.getSegmentTag())) return false;
-        return getNumber().equals(that.getNumber());
+        if (!getNumber().equals(that.getNumber())) return false;
+        return getType() != null ? getType().equals(that.getType()) : that.getType() == null;
 
     }
 
@@ -49,7 +49,7 @@ public class PhoneNumberSegment {
     public int hashCode() {
         int result = getSegmentTag().hashCode();
         result = 31 * result + getNumber().hashCode();
-        result = 31 * result + getType();
+        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
         return result;
     }
 }

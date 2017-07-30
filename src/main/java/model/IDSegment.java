@@ -23,11 +23,11 @@ public class IDSegment {
         this.segmentTag = segmentTag;
     }
 
-    public int getIdType() {
+    public Integer getIdType() {
         return idType;
     }
 
-    public void setIdType(int idType) {
+    public void setIdType(Integer idType) {
         this.idType = idType;
     }
 
@@ -86,8 +86,8 @@ public class IDSegment {
 
         IDSegment idSegment = (IDSegment) o;
 
-        if (getIdType() != idSegment.getIdType()) return false;
         if (!getSegmentTag().equals(idSegment.getSegmentTag())) return false;
+        if (!getIdType().equals(idSegment.getIdType())) return false;
         if (getSeriesNumber() != null ? !getSeriesNumber().equals(idSegment.getSeriesNumber()) : idSegment.getSeriesNumber() != null)
             return false;
         if (getIdNumber() != null ? !getIdNumber().equals(idSegment.getIdNumber()) : idSegment.getIdNumber() != null)
@@ -105,7 +105,7 @@ public class IDSegment {
     @Override
     public int hashCode() {
         int result = getSegmentTag().hashCode();
-        result = 31 * result + getIdType();
+        result = 31 * result + getIdType().hashCode();
         result = 31 * result + (getSeriesNumber() != null ? getSeriesNumber().hashCode() : 0);
         result = 31 * result + (getIdNumber() != null ? getIdNumber().hashCode() : 0);
         result = 31 * result + (getIssueDate() != null ? getIssueDate().hashCode() : 0);

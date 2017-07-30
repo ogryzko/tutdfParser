@@ -53,11 +53,11 @@ public class NameSegment {
         this.firstName = firstName;
     }
 
-    public int getEmptyField1() {
+    public Integer getEmptyField1() {
         return emptyField1;
     }
 
-    public void setEmptyField1(int emptyField1) {
+    public void setEmptyField1(Integer emptyField1) {
         this.emptyField1 = emptyField1;
     }
 
@@ -85,27 +85,27 @@ public class NameSegment {
         this.emptyField2 = emptyField2;
     }
 
-    public int getEmptyField3() {
+    public Integer getEmptyField3() {
         return emptyField3;
     }
 
-    public void setEmptyField3(int emptyField3) {
+    public void setEmptyField3(Integer emptyField3) {
         this.emptyField3 = emptyField3;
     }
 
-    public int getEmptyField4() {
+    public Integer getEmptyField4() {
         return emptyField4;
     }
 
-    public void setEmptyField4(int emptyField4) {
+    public void setEmptyField4(Integer emptyField4) {
         this.emptyField4 = emptyField4;
     }
 
-    public int getRemarks() {
+    public Integer getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(int remarks) {
+    public void setRemarks(Integer remarks) {
         this.remarks = remarks;
     }
 
@@ -132,19 +132,22 @@ public class NameSegment {
 
         NameSegment that = (NameSegment) o;
 
-        if (getEmptyField1() != that.getEmptyField1()) return false;
-        if (getEmptyField3() != that.getEmptyField3()) return false;
-        if (getEmptyField4() != that.getEmptyField4()) return false;
-        if (getRemarks() != that.getRemarks()) return false;
         if (!getSegmentTag().equals(that.getSegmentTag())) return false;
         if (!getSurname().equals(that.getSurname())) return false;
         if (getPatronymicName() != null ? !getPatronymicName().equals(that.getPatronymicName()) : that.getPatronymicName() != null)
             return false;
         if (!getFirstName().equals(that.getFirstName())) return false;
+        if (getEmptyField1() != null ? !getEmptyField1().equals(that.getEmptyField1()) : that.getEmptyField1() != null)
+            return false;
         if (!getDateOfBirth().equals(that.getDateOfBirth())) return false;
         if (!getPlaceOfBirth().equals(that.getPlaceOfBirth())) return false;
         if (getEmptyField2() != null ? !getEmptyField2().equals(that.getEmptyField2()) : that.getEmptyField2() != null)
             return false;
+        if (getEmptyField3() != null ? !getEmptyField3().equals(that.getEmptyField3()) : that.getEmptyField3() != null)
+            return false;
+        if (getEmptyField4() != null ? !getEmptyField4().equals(that.getEmptyField4()) : that.getEmptyField4() != null)
+            return false;
+        if (getRemarks() != null ? !getRemarks().equals(that.getRemarks()) : that.getRemarks() != null) return false;
         if (getOldSurname() != null ? !getOldSurname().equals(that.getOldSurname()) : that.getOldSurname() != null)
             return false;
         return getOldFirstName() != null ? getOldFirstName().equals(that.getOldFirstName()) : that.getOldFirstName() == null;
@@ -157,13 +160,13 @@ public class NameSegment {
         result = 31 * result + getSurname().hashCode();
         result = 31 * result + (getPatronymicName() != null ? getPatronymicName().hashCode() : 0);
         result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getEmptyField1();
+        result = 31 * result + (getEmptyField1() != null ? getEmptyField1().hashCode() : 0);
         result = 31 * result + getDateOfBirth().hashCode();
         result = 31 * result + getPlaceOfBirth().hashCode();
         result = 31 * result + (getEmptyField2() != null ? getEmptyField2().hashCode() : 0);
-        result = 31 * result + getEmptyField3();
-        result = 31 * result + getEmptyField4();
-        result = 31 * result + getRemarks();
+        result = 31 * result + (getEmptyField3() != null ? getEmptyField3().hashCode() : 0);
+        result = 31 * result + (getEmptyField4() != null ? getEmptyField4().hashCode() : 0);
+        result = 31 * result + (getRemarks() != null ? getRemarks().hashCode() : 0);
         result = 31 * result + (getOldSurname() != null ? getOldSurname().hashCode() : 0);
         result = 31 * result + (getOldFirstName() != null ? getOldFirstName().hashCode() : 0);
         return result;

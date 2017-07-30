@@ -9,25 +9,25 @@ public class TransactionSegment {
     private String segmentTag;
     private String memberCode;
     private String accountNumber;
-    private int accountType;
-    private int accountRelationship;
+    private Integer accountType;
+    private Integer accountRelationship;
     private Date dateAccountOpened;
     private Date dateOfLastPayment;
-    private int accountRating;
+    private Integer accountRating;
     private Date dateAccountRating;
     private Date dateReported;
     private String creditLimit;
     private String balance;
     private String pastDue;
     private String nextPayment;
-    private int creditPaymentFrequency;
+    private Integer creditPaymentFrequency;
     private String mop;
     private String currencyCode;
-    private int collateralCode;
+    private Integer collateralCode;
     private Date dateOfContractTermination;
     private Date datePaymentDue;
     private Date dateInterestPaymentDue;
-    private int interestPaymentFrequency;
+    private Integer interestPaymentFrequency;
     private String oldMemberCode;
     private String oldAccountNumber;
     private String amountOutstanding;
@@ -72,19 +72,19 @@ public class TransactionSegment {
         this.accountNumber = accountNumber;
     }
 
-    public int getAccountType() {
+    public Integer getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(int accountType) {
+    public void setAccountType(Integer accountType) {
         this.accountType = accountType;
     }
 
-    public int getAccountRelationship() {
+    public Integer getAccountRelationship() {
         return accountRelationship;
     }
 
-    public void setAccountRelationship(int accountRelationship) {
+    public void setAccountRelationship(Integer accountRelationship) {
         this.accountRelationship = accountRelationship;
     }
 
@@ -104,11 +104,11 @@ public class TransactionSegment {
         this.dateOfLastPayment = dateOfLastPayment;
     }
 
-    public int getAccountRating() {
+    public Integer getAccountRating() {
         return accountRating;
     }
 
-    public void setAccountRating(int accountRating) {
+    public void setAccountRating(Integer accountRating) {
         this.accountRating = accountRating;
     }
 
@@ -160,11 +160,11 @@ public class TransactionSegment {
         this.nextPayment = nextPayment;
     }
 
-    public int getCreditPaymentFrequency() {
+    public Integer getCreditPaymentFrequency() {
         return creditPaymentFrequency;
     }
 
-    public void setCreditPaymentFrequency(int creditPaymentFrequency) {
+    public void setCreditPaymentFrequency(Integer creditPaymentFrequency) {
         this.creditPaymentFrequency = creditPaymentFrequency;
     }
 
@@ -184,11 +184,11 @@ public class TransactionSegment {
         this.currencyCode = currencyCode;
     }
 
-    public int getCollateralCode() {
+    public Integer getCollateralCode() {
         return collateralCode;
     }
 
-    public void setCollateralCode(int collateralCode) {
+    public void setCollateralCode(Integer collateralCode) {
         this.collateralCode = collateralCode;
     }
 
@@ -216,11 +216,11 @@ public class TransactionSegment {
         this.dateInterestPaymentDue = dateInterestPaymentDue;
     }
 
-    public int getInterestPaymentFrequency() {
+    public Integer getInterestPaymentFrequency() {
         return interestPaymentFrequency;
     }
 
-    public void setInterestPaymentFrequency(int interestPaymentFrequency) {
+    public void setInterestPaymentFrequency(Integer interestPaymentFrequency) {
         this.interestPaymentFrequency = interestPaymentFrequency;
     }
 
@@ -352,19 +352,19 @@ public class TransactionSegment {
         this.rightOfClaimAcquirersRegistrationData = rightOfClaimAcquirersRegistrationData;
     }
 
-    public int getRightOfClaimAcquirersTaxpayerID() {
+    public Integer getRightOfClaimAcquirersTaxpayerID() {
         return rightOfClaimAcquirersTaxpayerID;
     }
 
-    public void setRightOfClaimAcquirersTaxpayerID(int rightOfClaimAcquirersTaxpayerID) {
+    public void setRightOfClaimAcquirersTaxpayerID(Integer rightOfClaimAcquirersTaxpayerID) {
         this.rightOfClaimAcquirersTaxpayerID = rightOfClaimAcquirersTaxpayerID;
     }
 
-    public int getRightOfClaimAcquirersSocialInsuranceNumber() {
+    public Integer getRightOfClaimAcquirersSocialInsuranceNumber() {
         return rightOfClaimAcquirersSocialInsuranceNumber;
     }
 
-    public void setRightOfClaimAcquirersSocialInsuranceNumber(int rightOfClaimAcquirersSocialInsuranceNumber) {
+    public void setRightOfClaimAcquirersSocialInsuranceNumber(Integer rightOfClaimAcquirersSocialInsuranceNumber) {
         this.rightOfClaimAcquirersSocialInsuranceNumber = rightOfClaimAcquirersSocialInsuranceNumber;
     }
 
@@ -391,21 +391,17 @@ public class TransactionSegment {
 
         TransactionSegment that = (TransactionSegment) o;
 
-        if (getAccountType() != that.getAccountType()) return false;
-        if (getAccountRelationship() != that.getAccountRelationship()) return false;
-        if (getAccountRating() != that.getAccountRating()) return false;
-        if (getCreditPaymentFrequency() != that.getCreditPaymentFrequency()) return false;
-        if (getCollateralCode() != that.getCollateralCode()) return false;
-        if (getInterestPaymentFrequency() != that.getInterestPaymentFrequency()) return false;
-        if (getRightOfClaimAcquirersTaxpayerID() != that.getRightOfClaimAcquirersTaxpayerID()) return false;
-        if (getRightOfClaimAcquirersSocialInsuranceNumber() != that.getRightOfClaimAcquirersSocialInsuranceNumber())
-            return false;
         if (!getSegmentTag().equals(that.getSegmentTag())) return false;
         if (!getMemberCode().equals(that.getMemberCode())) return false;
         if (!getAccountNumber().equals(that.getAccountNumber())) return false;
+        if (getAccountType() != null ? !getAccountType().equals(that.getAccountType()) : that.getAccountType() != null)
+            return false;
+        if (!getAccountRelationship().equals(that.getAccountRelationship())) return false;
         if (getDateAccountOpened() != null ? !getDateAccountOpened().equals(that.getDateAccountOpened()) : that.getDateAccountOpened() != null)
             return false;
         if (getDateOfLastPayment() != null ? !getDateOfLastPayment().equals(that.getDateOfLastPayment()) : that.getDateOfLastPayment() != null)
+            return false;
+        if (getAccountRating() != null ? !getAccountRating().equals(that.getAccountRating()) : that.getAccountRating() != null)
             return false;
         if (getDateAccountRating() != null ? !getDateAccountRating().equals(that.getDateAccountRating()) : that.getDateAccountRating() != null)
             return false;
@@ -417,14 +413,20 @@ public class TransactionSegment {
         if (getPastDue() != null ? !getPastDue().equals(that.getPastDue()) : that.getPastDue() != null) return false;
         if (getNextPayment() != null ? !getNextPayment().equals(that.getNextPayment()) : that.getNextPayment() != null)
             return false;
+        if (getCreditPaymentFrequency() != null ? !getCreditPaymentFrequency().equals(that.getCreditPaymentFrequency()) : that.getCreditPaymentFrequency() != null)
+            return false;
         if (getMop() != null ? !getMop().equals(that.getMop()) : that.getMop() != null) return false;
         if (getCurrencyCode() != null ? !getCurrencyCode().equals(that.getCurrencyCode()) : that.getCurrencyCode() != null)
+            return false;
+        if (getCollateralCode() != null ? !getCollateralCode().equals(that.getCollateralCode()) : that.getCollateralCode() != null)
             return false;
         if (getDateOfContractTermination() != null ? !getDateOfContractTermination().equals(that.getDateOfContractTermination()) : that.getDateOfContractTermination() != null)
             return false;
         if (getDatePaymentDue() != null ? !getDatePaymentDue().equals(that.getDatePaymentDue()) : that.getDatePaymentDue() != null)
             return false;
         if (getDateInterestPaymentDue() != null ? !getDateInterestPaymentDue().equals(that.getDateInterestPaymentDue()) : that.getDateInterestPaymentDue() != null)
+            return false;
+        if (getInterestPaymentFrequency() != null ? !getInterestPaymentFrequency().equals(that.getInterestPaymentFrequency()) : that.getInterestPaymentFrequency() != null)
             return false;
         if (getOldMemberCode() != null ? !getOldMemberCode().equals(that.getOldMemberCode()) : that.getOldMemberCode() != null)
             return false;
@@ -460,6 +462,10 @@ public class TransactionSegment {
             return false;
         if (getRightOfClaimAcquirersRegistrationData() != null ? !getRightOfClaimAcquirersRegistrationData().equals(that.getRightOfClaimAcquirersRegistrationData()) : that.getRightOfClaimAcquirersRegistrationData() != null)
             return false;
+        if (getRightOfClaimAcquirersTaxpayerID() != null ? !getRightOfClaimAcquirersTaxpayerID().equals(that.getRightOfClaimAcquirersTaxpayerID()) : that.getRightOfClaimAcquirersTaxpayerID() != null)
+            return false;
+        if (getRightOfClaimAcquirersSocialInsuranceNumber() != null ? !getRightOfClaimAcquirersSocialInsuranceNumber().equals(that.getRightOfClaimAcquirersSocialInsuranceNumber()) : that.getRightOfClaimAcquirersSocialInsuranceNumber() != null)
+            return false;
         return getCompletePerformanceOfObligationsDate() != null ? getCompletePerformanceOfObligationsDate().equals(that.getCompletePerformanceOfObligationsDate()) : that.getCompletePerformanceOfObligationsDate() == null;
 
     }
@@ -469,25 +475,25 @@ public class TransactionSegment {
         int result = getSegmentTag().hashCode();
         result = 31 * result + getMemberCode().hashCode();
         result = 31 * result + getAccountNumber().hashCode();
-        result = 31 * result + getAccountType();
-        result = 31 * result + getAccountRelationship();
+        result = 31 * result + (getAccountType() != null ? getAccountType().hashCode() : 0);
+        result = 31 * result + getAccountRelationship().hashCode();
         result = 31 * result + (getDateAccountOpened() != null ? getDateAccountOpened().hashCode() : 0);
         result = 31 * result + (getDateOfLastPayment() != null ? getDateOfLastPayment().hashCode() : 0);
-        result = 31 * result + getAccountRating();
+        result = 31 * result + (getAccountRating() != null ? getAccountRating().hashCode() : 0);
         result = 31 * result + (getDateAccountRating() != null ? getDateAccountRating().hashCode() : 0);
         result = 31 * result + (getDateReported() != null ? getDateReported().hashCode() : 0);
         result = 31 * result + (getCreditLimit() != null ? getCreditLimit().hashCode() : 0);
         result = 31 * result + (getBalance() != null ? getBalance().hashCode() : 0);
         result = 31 * result + (getPastDue() != null ? getPastDue().hashCode() : 0);
         result = 31 * result + (getNextPayment() != null ? getNextPayment().hashCode() : 0);
-        result = 31 * result + getCreditPaymentFrequency();
+        result = 31 * result + (getCreditPaymentFrequency() != null ? getCreditPaymentFrequency().hashCode() : 0);
         result = 31 * result + (getMop() != null ? getMop().hashCode() : 0);
         result = 31 * result + (getCurrencyCode() != null ? getCurrencyCode().hashCode() : 0);
-        result = 31 * result + getCollateralCode();
+        result = 31 * result + (getCollateralCode() != null ? getCollateralCode().hashCode() : 0);
         result = 31 * result + (getDateOfContractTermination() != null ? getDateOfContractTermination().hashCode() : 0);
         result = 31 * result + (getDatePaymentDue() != null ? getDatePaymentDue().hashCode() : 0);
         result = 31 * result + (getDateInterestPaymentDue() != null ? getDateInterestPaymentDue().hashCode() : 0);
-        result = 31 * result + getInterestPaymentFrequency();
+        result = 31 * result + (getInterestPaymentFrequency() != null ? getInterestPaymentFrequency().hashCode() : 0);
         result = 31 * result + (getOldMemberCode() != null ? getOldMemberCode().hashCode() : 0);
         result = 31 * result + (getOldAccountNumber() != null ? getOldAccountNumber().hashCode() : 0);
         result = 31 * result + (getAmountOutstanding() != null ? getAmountOutstanding().hashCode() : 0);
@@ -505,8 +511,8 @@ public class TransactionSegment {
         result = 31 * result + (getOverallValueOfCredit() != null ? getOverallValueOfCredit().hashCode() : 0);
         result = 31 * result + (getRightOfClaimAcquirersNames() != null ? getRightOfClaimAcquirersNames().hashCode() : 0);
         result = 31 * result + (getRightOfClaimAcquirersRegistrationData() != null ? getRightOfClaimAcquirersRegistrationData().hashCode() : 0);
-        result = 31 * result + getRightOfClaimAcquirersTaxpayerID();
-        result = 31 * result + getRightOfClaimAcquirersSocialInsuranceNumber();
+        result = 31 * result + (getRightOfClaimAcquirersTaxpayerID() != null ? getRightOfClaimAcquirersTaxpayerID().hashCode() : 0);
+        result = 31 * result + (getRightOfClaimAcquirersSocialInsuranceNumber() != null ? getRightOfClaimAcquirersSocialInsuranceNumber().hashCode() : 0);
         result = 31 * result + (getCompletePerformanceOfObligationsDate() != null ? getCompletePerformanceOfObligationsDate().hashCode() : 0);
         return result;
     }

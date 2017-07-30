@@ -15,11 +15,11 @@ public class TRLRSegment {
         this.trailerSegment = trailerSegment;
     }
 
-    public int getCounter() {
+    public Integer getCounter() {
         return Counter;
     }
 
-    public void setCounter(int counter) {
+    public void setCounter(Integer counter) {
         Counter = counter;
     }
 
@@ -30,15 +30,15 @@ public class TRLRSegment {
 
         TRLRSegment that = (TRLRSegment) o;
 
-        if (getCounter() != that.getCounter()) return false;
-        return getTrailerSegment().equals(that.getTrailerSegment());
+        if (!getTrailerSegment().equals(that.getTrailerSegment())) return false;
+        return getCounter() != null ? getCounter().equals(that.getCounter()) : that.getCounter() == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = getTrailerSegment().hashCode();
-        result = 31 * result + getCounter();
+        result = 31 * result + (getCounter() != null ? getCounter().hashCode() : 0);
         return result;
     }
 }
