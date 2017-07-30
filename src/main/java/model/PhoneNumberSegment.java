@@ -6,7 +6,7 @@ package model;
 public class PhoneNumberSegment {
     private String segmentTag;
     private String number;
-    private int type;
+    private Integer type;
 
     public String getSegmentTag() {
         return segmentTag;

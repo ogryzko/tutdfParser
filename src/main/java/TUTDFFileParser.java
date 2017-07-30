@@ -111,18 +111,25 @@ public class TUTDFFileParser {
     }
 
     public TRLRSegment parseTRLRSegment(String currentLine) {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_TRLR_FIELDS) return null;
 
         TRLRSegment trlrSegment = new TRLRSegment();
 
-        String trailerSegment = strArr[0];
-        trlrSegment.setTrailerSegment(trailerSegment);
+        setMandatoryTrailerSegmentFields(strArr[0], trlrSegment);
 
-        String counterString = strArr[1];
-        int counter = Integer.parseInt(counterString);
-        trlrSegment.setCounter(counter);
+        setOptionalTrailerSegmentFields(strArr[1]);
         return trlrSegment;
+    }
+
+    private void setOptionalTrailerSegmentFields(String s) {
+        String counterString = s;
+        Integer counter = Integer.parseInt(counterString);
+    }
+
+    private void setMandatoryTrailerSegmentFields(String s, TRLRSegment trlrSegment) {
+        String trailerSegment = s;
+        trlrSegment.setTrailerSegment(trailerSegment);
     }
 
     private void tutdfIDHandler(String currentLine) throws ParseException {
@@ -138,18 +145,28 @@ public class TUTDFFileParser {
     }
 
     public IDSegment parseIdSegment(String currentLine) throws ParseException {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_ID_FIELDS) return null;
 
         IDSegment idSegment = new IDSegment();
 
-        String segmentTag = strArr[0];
-        idSegment.setSegmentTag(segmentTag);
+        setMandatoryIdSegmentFields(strArr, idSegment);
 
-        String idTypeString = strArr[1];
-        int idType = Integer.parseInt(idTypeString);
-        idSegment.setIdType(idType);
+        setConditionalIdSegmentFields(strArr, idSegment);
 
+        setOptionalIdSegmentFields(strArr, idSegment);
+        return idSegment;
+    }
+
+    private void setOptionalIdSegmentFields(String[] strArr, IDSegment idSegment) {
+        String issueLocation = strArr[6];
+        idSegment.setIssueLocation(issueLocation);
+
+        String oldIDNumber = strArr[7];
+        idSegment.setOldIDNumber(oldIDNumber);
+    }
+
+    private void setConditionalIdSegmentFields(String[] strArr, IDSegment idSegment) throws ParseException {
         String seriesNumber = strArr[2];
         idSegment.setSeriesNumber(seriesNumber);
 
@@ -162,13 +179,15 @@ public class TUTDFFileParser {
 
         String issueAuthority = strArr[5];
         idSegment.setIssueAuthority(issueAuthority);
+    }
 
-        String issueLocation = strArr[6];
-        idSegment.setIssueLocation(issueLocation);
+    private void setMandatoryIdSegmentFields(String[] strArr, IDSegment idSegment) {
+        String segmentTag = strArr[0];
+        idSegment.setSegmentTag(segmentTag);
 
-        String oldIDNumber = strArr[7];
-        idSegment.setOldIDNumber(oldIDNumber);
-        return idSegment;
+        String idTypeString = strArr[1];
+        int idType = Integer.parseInt(idTypeString);
+        idSegment.setIdType(idType);
     }
 
     private void tutdfNAHandler(String currentLine) throws ParseException {
@@ -185,55 +204,63 @@ public class TUTDFFileParser {
     }
 
     public NameSegment parseNameSegment(String currentLine) throws ParseException {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_NA_FIELDS) return null;
 
         NameSegment nameSegment = new NameSegment();
 
-        String segmentTag = strArr[0];
-        nameSegment.setSegmentTag(segmentTag);
+        setMandatoryNameSegmentFields(strArr, nameSegment);
 
-        String surname = strArr[1];
-        nameSegment.setSurname(surname);
+        setOptionalNameSegmentFields(strArr, nameSegment);
+        return nameSegment;
+    }
 
-        String patronymicName = strArr[2];
+    private void setOptionalNameSegmentFields(String[] strArr, NameSegment nameSegment) {
+        String patronymicName = strArr[2]; // O
         nameSegment.setPatronymicName(patronymicName);
-
-        String firstName = strArr[3];
-        nameSegment.setFirstName(firstName);
-
-        String emptyField1String = strArr[4];
+        String emptyField1String = strArr[4]; // O
         int emptyField1 = Integer.parseInt(emptyField1String); // todo ask about "empty numeric field"...
         nameSegment.setEmptyField1(emptyField1);
-
-        String dateOfBirthString = strArr[5];
-        Date dateOfBirth = sdf.parse(dateOfBirthString);
-        nameSegment.setDateOfBirth(dateOfBirth);
-
-        String placeOfBirth = strArr[6];
-        nameSegment.setPlaceOfBirth(placeOfBirth);
-
-        String emptyField2 = strArr[7];
+        String emptyField2 = strArr[7]; // O
         nameSegment.setEmptyField2(emptyField2);
 
-        String emptyField3String = strArr[8];
+        String emptyField3String = strArr[8]; // O
         int emptyField3 = Integer.parseInt(emptyField3String);
         nameSegment.setEmptyField3(emptyField3);
 
-        String emptyField4String = strArr[9];
+        String emptyField4String = strArr[9]; // O
         int emptyField4 = Integer.parseInt(emptyField4String);
         nameSegment.setEmptyField4(emptyField4);
 
-        String remarksString = strArr[10];
+        String remarksString = strArr[10]; // O
         int remarks = Integer.parseInt(remarksString);
         nameSegment.setRemarks(remarks);
 
-        String oldSurname = strArr[11];
+        String oldSurname = strArr[11]; // O
         nameSegment.setOldSurname(oldSurname);
 
-        String oldFirstName = strArr[12];
+        String oldFirstName = strArr[12]; // O
         nameSegment.setOldFirstName(oldFirstName);
-        return nameSegment;
+    }
+
+    private void setMandatoryNameSegmentFields(String[] strArr, NameSegment nameSegment) throws ParseException {
+        String segmentTag = strArr[0]; // M
+        nameSegment.setSegmentTag(segmentTag);
+
+        String surname = strArr[1]; // M
+        nameSegment.setSurname(surname);
+
+
+        String firstName = strArr[3]; // M
+        nameSegment.setFirstName(firstName);
+
+
+        String dateOfBirthString = strArr[5]; // M
+        Date dateOfBirth = sdf.parse(dateOfBirthString);
+        nameSegment.setDateOfBirth(dateOfBirth);
+
+        String placeOfBirth = strArr[6]; // M
+        nameSegment.setPlaceOfBirth(placeOfBirth);
     }
 
     private void tutdfPNHandler(String currentLine) {
@@ -249,21 +276,29 @@ public class TUTDFFileParser {
     }
 
     public PhoneNumberSegment parsePhoneNumberSegment(String currentLine) {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_NA_FIELDS) return null;
 
         PhoneNumberSegment phoneNumberSegment = new PhoneNumberSegment();
 
-        String segmentTag = strArr[0];
-        phoneNumberSegment.setSegmentTag(segmentTag);
+        setMandatoryPhoneNumberSegmentFields(strArr, phoneNumberSegment);
 
-        String number = strArr[1];
-        phoneNumberSegment.setNumber(number);
+        setConditionalPhoneNumberSegmentFields(strArr[2], phoneNumberSegment);
+        return phoneNumberSegment;
+    }
 
-        String typeString = strArr[2];
+    private void setConditionalPhoneNumberSegmentFields(String s, PhoneNumberSegment phoneNumberSegment) {
+        String typeString = s; // C
         int type = Integer.parseInt(typeString);
         phoneNumberSegment.setType(type);
-        return phoneNumberSegment;
+    }
+
+    private void setMandatoryPhoneNumberSegmentFields(String[] strArr, PhoneNumberSegment phoneNumberSegment) {
+        String segmentTag = strArr[0]; // M
+        phoneNumberSegment.setSegmentTag(segmentTag);
+
+        String number = strArr[1]; // M
+        phoneNumberSegment.setNumber(number);
     }
 
     private void tutdfTRHandler(String currentLine) throws ParseException {
@@ -279,156 +314,169 @@ public class TUTDFFileParser {
     }
 
     public TransactionSegment parseTransactionSegment(String currentLine) throws ParseException {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_TR_FIELDS) return null;
 
         TransactionSegment transactionSegment = new TransactionSegment();
 
-        String segmentTag = strArr[0];
-        transactionSegment.setSegmentTag(segmentTag);
+        setMandatoryTransactionSegmentFields(strArr, transactionSegment);
 
-        String memberCode = strArr[1];
-        transactionSegment.setMemberCode(memberCode);
+        setConditionalTransactionSegmentFields(strArr, transactionSegment);
 
-        String accountNumber = strArr[2];
-        transactionSegment.setAccountNumber(accountNumber);
+        setOptionalTransactionSegmentFields(strArr, transactionSegment);
+        return transactionSegment;
+    }
 
-        String accountTypeString = strArr[3];
+    private void setOptionalTransactionSegmentFields(String[] strArr, TransactionSegment transactionSegment) {
+        String oldMemberCode = strArr[22]; // O
+        transactionSegment.setOldMemberCode(oldMemberCode);
+
+        String oldAccountNumber = strArr[23]; // O
+        transactionSegment.setOldAccountNumber(oldAccountNumber);
+    }
+
+    private void setConditionalTransactionSegmentFields(String[] strArr, TransactionSegment transactionSegment) throws ParseException {
+        String accountTypeString = strArr[3]; // C
         int accountType = Integer.parseInt(accountTypeString);
         transactionSegment.setAccountType(accountType);
-
-        String accountRelationshipString = strArr[4];
-        int accountRelationship = Integer.parseInt(accountRelationshipString);
-        transactionSegment.setAccountRelationship(accountRelationship);
-
-        String dateAccountOpenedString = strArr[5];
+        String dateAccountOpenedString = strArr[5]; // C
         Date dateAccountOpened = sdf.parse(dateAccountOpenedString);
         transactionSegment.setDateAccountOpened(dateAccountOpened);
 
-        String dateOfLastPaymentString = strArr[6];
+        String dateOfLastPaymentString = strArr[6]; // C
         Date dateOfLastPayment = sdf.parse(dateOfLastPaymentString);
         transactionSegment.setDateOfLastPayment(dateOfLastPayment);
 
-        String accountRatingString = strArr[7];
+        String accountRatingString = strArr[7]; // C
         int accountRating = Integer.parseInt(accountRatingString);
         transactionSegment.setAccountRating(accountRating);
 
-        String dateAccountRatingString = strArr[8];
+        String dateAccountRatingString = strArr[8]; // C
         Date dateAccountRating = sdf.parse(dateAccountRatingString);
         transactionSegment.setDateAccountRating(dateAccountRating);
 
-        String dateReportedString = strArr[9];
+        String dateReportedString = strArr[9]; // C
         Date dateReported = sdf.parse(dateReportedString);
         transactionSegment.setDateReported(dateReported);
 
-        String creditLimit = strArr[10];
+        String creditLimit = strArr[10]; // C
         transactionSegment.setCreditLimit(creditLimit);
 
-        String balance = strArr[11];
+        String balance = strArr[11]; // C
         transactionSegment.setBalance(balance);
 
-        String pastDue = strArr[12];
+        String pastDue = strArr[12]; // C
         transactionSegment.setPastDue(pastDue);
 
-        String nextPayment = strArr[13];
+        String nextPayment = strArr[13]; // C
         transactionSegment.setNextPayment(nextPayment);
 
-        String creditPaymentFrequencyString = strArr[14];
+        String creditPaymentFrequencyString = strArr[14]; // C
         int creditPaymentFrequency = Integer.parseInt(creditPaymentFrequencyString);
         transactionSegment.setCreditPaymentFrequency(creditPaymentFrequency);
 
-        String mop = strArr[15];
+        String mop = strArr[15]; // C
         transactionSegment.setMop(mop);
 
-        String currencyCode = strArr[16];
+        String currencyCode = strArr[16]; // C
         transactionSegment.setCurrencyCode(currencyCode);
 
-        String collateralCodeString = strArr[17];
+        String collateralCodeString = strArr[17]; // C
         int collateralCode = Integer.parseInt(collateralCodeString);
         transactionSegment.setCollateralCode(collateralCode);
 
-        String dateOfContractTerminationString = strArr[18];
+        String dateOfContractTerminationString = strArr[18]; // C
         Date dateOfContractTermination = sdf.parse(dateOfContractTerminationString);
         transactionSegment.setDateOfContractTermination(dateOfContractTermination);
 
-        String datePaymentDueString = strArr[19];
+        String datePaymentDueString = strArr[19]; // C
         Date datePaymentDue = sdf.parse(datePaymentDueString);
         transactionSegment.setDatePaymentDue(datePaymentDue);
 
-        String dateInterestPaymentDueString = strArr[20];
+        String dateInterestPaymentDueString = strArr[20]; // C
         Date dateInterestPaymentDue = sdf.parse(dateInterestPaymentDueString);
         transactionSegment.setDatePaymentDue(dateInterestPaymentDue);
 
-        String interestPaymentFrequencyString = strArr[21];
+        String interestPaymentFrequencyString = strArr[21]; // C
         int interestPaymentFrequency = Integer.parseInt(interestPaymentFrequencyString);
         transactionSegment.setInterestPaymentFrequency(interestPaymentFrequency);
 
-        String oldMemberCode = strArr[22];
-        transactionSegment.setOldMemberCode(oldMemberCode);
 
-        String oldAccountNumber = strArr[23];
-        transactionSegment.setOldAccountNumber(oldAccountNumber);
-
-        String amountOutstanding = strArr[24];
+        String amountOutstanding = strArr[24]; // C
         transactionSegment.setAmountOutstanding(amountOutstanding);
 
-        String guarantorIndicator = strArr[25];
+        String guarantorIndicator = strArr[25]; // C
         transactionSegment.setGuarantorIndicator(guarantorIndicator);
 
-        String volumeOfDebtSecuredByGuarantee = strArr[26];
+        String volumeOfDebtSecuredByGuarantee = strArr[26]; // C
         transactionSegment.setVolumeOfDebtSecuredByBankGuarantee(volumeOfDebtSecuredByGuarantee);
 
-        String guaranteeSum = strArr[27];
+        String guaranteeSum = strArr[27]; // C
         transactionSegment.setGuaranteeSum(guaranteeSum);
 
-        String guaranteeTemString = strArr[28];
+        String guaranteeTemString = strArr[28]; // C
         Date guaranteeTem = sdf.parse(guaranteeTemString);
         transactionSegment.setGuaranteeTem(guaranteeTem);
 
-        String bankGuaranteeIndicator = strArr[29];
+        String bankGuaranteeIndicator = strArr[29]; // C
         transactionSegment.setBankGuaranteeIndicator(bankGuaranteeIndicator);
 
-        String volumeOfDebtSecuredByBankGuarantee = strArr[30];
+        String volumeOfDebtSecuredByBankGuarantee = strArr[30]; // C
         transactionSegment.setVolumeOfDebtSecuredByBankGuarantee(volumeOfDebtSecuredByBankGuarantee);
 
-        String bankGuaranteeSum = strArr[31];
+        String bankGuaranteeSum = strArr[31]; // C
         transactionSegment.setBankGuaranteeSum(bankGuaranteeSum);
 
-        String bankGuaranteeTem = strArr[32];
+        String bankGuaranteeTem = strArr[32]; // C
         transactionSegment.setBankGuaranteeTem(bankGuaranteeTem);
 
-        String collateralValue = strArr[33];
+        String collateralValue = strArr[33]; // C
         transactionSegment.setCollateralValue(collateralValue);
 
-        String collateralDateString  = strArr[34];
+        String collateralDateString  = strArr[34]; // C
         Date collateralDate = sdf.parse(collateralDateString);
         transactionSegment.setCollateralDate(collateralDate);
 
-        String collateralAgreementExpirationDateString = strArr[35];
+        String collateralAgreementExpirationDateString = strArr[35]; // С
         Date collateralAgreementExpirationDate = sdf.parse(collateralAgreementExpirationDateString);
         transactionSegment.setCollateralAgreementExpirationDate(collateralAgreementExpirationDate);
 
-        String overallValueOfCredit = strArr[36];
+        String overallValueOfCredit = strArr[36]; // С
         transactionSegment.setOverallValueOfCredit(overallValueOfCredit);
 
-        String rightOfClaimAcquirersNames = strArr[37];
+        String rightOfClaimAcquirersNames = strArr[37]; // С
         transactionSegment.setRightOfClaimAcquirersNames(rightOfClaimAcquirersNames);
 
-        String rightOfClaimAcquirersRegistrationData = strArr[38];
+        String rightOfClaimAcquirersRegistrationData = strArr[38]; // С
         transactionSegment.setRightOfClaimAcquirersRegistrationData(rightOfClaimAcquirersRegistrationData);
 
-        String rightOfClaimAcquirersTaxpayerIDString = strArr[39];
+        String rightOfClaimAcquirersTaxpayerIDString = strArr[39]; // С
         int rightOfClaimAcquirersTaxpayerID = Integer.parseInt(rightOfClaimAcquirersTaxpayerIDString);
         transactionSegment.setRightOfClaimAcquirersTaxpayerID(rightOfClaimAcquirersTaxpayerID);
 
-        String rightOfClaimAcquirersSocialInsuranceNumberString = strArr[40];
+        String rightOfClaimAcquirersSocialInsuranceNumberString = strArr[40]; // С
         int rightOfClaimAcquirersSocialInsuranceNumber = Integer.parseInt(rightOfClaimAcquirersSocialInsuranceNumberString);
         transactionSegment.setRightOfClaimAcquirersSocialInsuranceNumber(rightOfClaimAcquirersSocialInsuranceNumber);
 
-        String completePerformanceOfObligationsDateString = strArr[41];
+        String completePerformanceOfObligationsDateString = strArr[41]; // С
         Date completePerformanceOfObligationsDate = sdf.parse(completePerformanceOfObligationsDateString);
         transactionSegment.setCompletePerformanceOfObligationsDate(completePerformanceOfObligationsDate);
-        return transactionSegment;
+    }
+
+    private void setMandatoryTransactionSegmentFields(String[] strArr, TransactionSegment transactionSegment) {
+        String segmentTag = strArr[0]; // M
+        transactionSegment.setSegmentTag(segmentTag);
+
+        String memberCode = strArr[1]; // M
+        transactionSegment.setMemberCode(memberCode);
+
+        String accountNumber = strArr[2]; // M
+        transactionSegment.setAccountNumber(accountNumber);
+
+
+        String accountRelationshipString = strArr[4]; // M
+        int accountRelationship = Integer.parseInt(accountRelationshipString);
+        transactionSegment.setAccountRelationship(accountRelationship);
     }
 
     private void tutdfTUTDFHandler(String currentLine) throws ParseException {
@@ -445,11 +493,25 @@ public class TUTDFFileParser {
     }
 
     public HeaderSegment parseHeaderSegment(String currentLine) throws ParseException {
-        String[] strArr = currentLine.split("\t");
+        String[] strArr = getStrings(currentLine);
         if(strArr.length != NUM_TUTDF_FIELDS) return null;
 
         HeaderSegment headerSegment = new HeaderSegment();
 
+        setMandatoryHeaderSegmentFields(strArr, headerSegment);
+
+        setOptionalHeaderSegmentFields(strArr, headerSegment);
+        return headerSegment;
+    }
+
+    private void setOptionalHeaderSegmentFields(String[] strArr, HeaderSegment headerSegment) {
+        String cycleIdentification = strArr[4];
+        headerSegment.setCycleIdentification(cycleIdentification);
+        String memberData = strArr[7];
+        headerSegment.setMemberData(memberData);
+    }
+
+    private void setMandatoryHeaderSegmentFields(String[] strArr, HeaderSegment headerSegment) throws ParseException {
         String segmentTag = strArr[0];
         headerSegment.setSegmentTag(segmentTag);
 
@@ -463,8 +525,6 @@ public class TUTDFFileParser {
         String memberCode = strArr[3];
         headerSegment.setMemberCode(memberCode);
 
-        String cycleIdentification = strArr[4];
-        headerSegment.setCycleIdentification(cycleIdentification);
 
         String reportedDateString = strArr[5];
         Date reportedDate = sdf.parse(reportedDateString);
@@ -472,10 +532,11 @@ public class TUTDFFileParser {
 
         String authorizationCode = strArr[6];
         headerSegment.setAuthorizationCode(authorizationCode);
+    }
 
-        String memberData = strArr[7];
-        headerSegment.setMemberData(memberData);
-        return headerSegment;
+    private String[] getStrings(String currentLine) {
+        currentLine+="\t";
+        return currentLine.split("\t", -1);
     }
 
     private SegmentTag segmentTagFromLine(String line){

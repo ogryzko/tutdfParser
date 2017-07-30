@@ -10,13 +10,13 @@ public class NameSegment {
     private String surname;
     private String patronymicName;
     private String firstName;
-    private int emptyField1; // поле не используется O.o
+    private Integer emptyField1; // поле не используется O.o
     private Date dateOfBirth;
     private String placeOfBirth;
     private String emptyField2; // поле не используется О.о
-    private int emptyField3; // поле не используется О.о
-    private int emptyField4; // поле не используется О.о
-    private int remarks;
+    private Integer emptyField3; // поле не используется О.о
+    private Integer emptyField4; // поле не используется О.о
+    private Integer remarks;
     private String oldSurname;
     private String oldFirstName;
 

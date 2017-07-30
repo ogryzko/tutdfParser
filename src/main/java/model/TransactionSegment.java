@@ -45,8 +45,8 @@ public class TransactionSegment {
     private String overallValueOfCredit;
     private String rightOfClaimAcquirersNames;
     private String rightOfClaimAcquirersRegistrationData;
-    private int rightOfClaimAcquirersTaxpayerID;
-    private int rightOfClaimAcquirersSocialInsuranceNumber;
+    private Integer rightOfClaimAcquirersTaxpayerID;
+    private Integer rightOfClaimAcquirersSocialInsuranceNumber;
     private Date completePerformanceOfObligationsDate;
     public String getSegmentTag() {
         return segmentTag;

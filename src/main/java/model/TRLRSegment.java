@@ -5,7 +5,7 @@ package model;
  */
 public class TRLRSegment {
     private String trailerSegment;
-    private int Counter;
+    private Integer Counter;
 
     public String getTrailerSegment() {
         return trailerSegment;

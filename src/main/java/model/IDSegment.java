@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class IDSegment {
     private String segmentTag;
-    private int idType;
+    private Integer idType;
     private String seriesNumber;
     private String idNumber;
     private Date issueDate;
