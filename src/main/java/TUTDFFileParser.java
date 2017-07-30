@@ -49,7 +49,7 @@ public class TUTDFFileParser {
     }
 
     public TUTDFData parseTUTDFFile(BufferedReader reader) throws IOException, ParseException {
-        String currentLine = null;
+        String currentLine;
         currentEntry = null;
 
         data = new TUTDFData();
@@ -398,7 +398,7 @@ public class TUTDFFileParser {
 
         String dateInterestPaymentDueString = strArr[20]; // C
         Date dateInterestPaymentDue = parseOptionalDateField(dateInterestPaymentDueString);
-        transactionSegment.setDatePaymentDue(dateInterestPaymentDue);
+        transactionSegment.setDateInterestPaymentDue(dateInterestPaymentDue);
 
         String interestPaymentFrequencyString = strArr[21]; // C
         Integer interestPaymentFrequency = parseOptionalNumericalField(interestPaymentFrequencyString);
@@ -412,7 +412,7 @@ public class TUTDFFileParser {
         transactionSegment.setGuarantorIndicator(guarantorIndicator);
 
         String volumeOfDebtSecuredByGuarantee = strArr[26]; // C
-        transactionSegment.setVolumeOfDebtSecuredByBankGuarantee(volumeOfDebtSecuredByGuarantee);
+        transactionSegment.setVolumeOfDebtSecuredByGuarantee(volumeOfDebtSecuredByGuarantee);
 
         String guaranteeSum = strArr[27]; // C
         transactionSegment.setGuaranteeSum(guaranteeSum);
@@ -538,8 +538,8 @@ public class TUTDFFileParser {
     }
 
     private String[] getStrings(String currentLine) {
-        currentLine+="\t";
-        return currentLine.split("\t", -1);
+        String[] strArr = currentLine.split("\t", -1);
+        return strArr;
     }
 
     private SegmentTag segmentTagFromLine(String line){
