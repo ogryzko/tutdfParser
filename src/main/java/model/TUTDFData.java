@@ -32,4 +32,12 @@ public class TUTDFData {
     public int hashCode() {
         return getTutdfEntryList() != null ? getTutdfEntryList().hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TUTDFData{");
+        sb.append("tutdfEntryList=").append(tutdfEntryList);
+        sb.append('}');
+        return sb.toString();
+    }
 }

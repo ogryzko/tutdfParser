@@ -99,6 +99,20 @@ public class HeaderSegment {
     }
 
     @Override
+    public String toString() {
+        return "HeaderSegment{" +
+                "segmentTag='" + segmentTag + '\'' +
+                ", version='" + version + '\'' +
+                ", VersionDate=" + VersionDate +
+                ", memberCode='" + memberCode + '\'' +
+                ", cycleIdentification='" + cycleIdentification + '\'' +
+                ", reportDate=" + reportDate +
+                ", authorizationCode='" + authorizationCode + '\'' +
+                ", memberData='" + memberData + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = getSegmentTag().hashCode();
         result = 31 * result + getVersion().hashCode();
@@ -109,5 +123,7 @@ public class HeaderSegment {
         result = 31 * result + getAuthorizationCode().hashCode();
         result = 31 * result + (getMemberData() != null ? getMemberData().hashCode() : 0);
         return result;
+
+
     }
 }

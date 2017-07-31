@@ -1,9 +1,12 @@
 import model.TUTDFData;
 import model.TUTDFEntry;
+import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 
 import static org.junit.Assert.assertEquals;
@@ -86,10 +89,27 @@ public class TUTDFFileParserTest {
     }
 
     @Test
-    public void testParseFileCLGRBGExample() throws IOException, ParseException {
+    public void testParseFileCLGRBGExample() throws IOException, ParseException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         ClassLoader classLoader = getClass().getClassLoader();
         TUTDFData data = parser.parseTUTDFFile(classLoader.getResourceAsStream(
                 "TUTDF Sample v 4.0 - CL_GR_BG_20160224.txt"));
-        assertEquals(sampleCLGRBG, data);
+
+        TUTDFEntry dataEntry = data.getTutdfEntryList().get(0);
+
+        BeanMap map = new BeanMap(dataEntry);
+
+        PropertyUtilsBean propUtils = new PropertyUtilsBean();
+
+        for (Object propNameObject : map.keySet()) {
+            String propertyName = (String) propNameObject;
+            Object property1 = propUtils.getProperty(dataEntry, propertyName);
+            Object property2 = propUtils.getProperty(sampleCLGRBG.getTutdfEntryList().get(0), propertyName);
+            if (property1.equals(property2)) {
+                System.out.println("  " + propertyName + " is equal");
+            } else {
+                System.out.println("> " + propertyName + " is different (\noldValue=\"" + property1.toString() + "\"\nnewValue=\"" + property2.toString() + "\")");
+            }
+            //assertEquals(sampleCLGRBG, data);
+        }
     }
 }

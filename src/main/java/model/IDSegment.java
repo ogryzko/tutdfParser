@@ -114,4 +114,18 @@ public class IDSegment {
         result = 31 * result + (getOldIDNumber() != null ? getOldIDNumber().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "IDSegment{" +
+                "segmentTag='" + segmentTag + '\'' +
+                ", idType=" + idType +
+                ", seriesNumber='" + seriesNumber + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", issueDate=" + issueDate +
+                ", issueAuthority='" + issueAuthority + '\'' +
+                ", issueLocation='" + issueLocation + '\'' +
+                ", oldIDNumber='" + oldIDNumber + '\'' +
+                '}';
+    }
 }

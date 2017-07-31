@@ -471,6 +471,54 @@ public class TransactionSegment {
     }
 
     @Override
+    public String toString() {
+        return "TransactionSegment{" +
+                "segmentTag='" + segmentTag + '\'' +
+                ", memberCode='" + memberCode + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", accountType=" + accountType +
+                ", accountRelationship=" + accountRelationship +
+                ", dateAccountOpened=" + dateAccountOpened +
+                ", dateOfLastPayment=" + dateOfLastPayment +
+                ", accountRating=" + accountRating +
+                ", dateAccountRating=" + dateAccountRating +
+                ", dateReported=" + dateReported +
+                ", creditLimit='" + creditLimit + '\'' +
+                ", balance='" + balance + '\'' +
+                ", pastDue='" + pastDue + '\'' +
+                ", nextPayment='" + nextPayment + '\'' +
+                ", creditPaymentFrequency=" + creditPaymentFrequency +
+                ", mop='" + mop + '\'' +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", collateralCode=" + collateralCode +
+                ", dateOfContractTermination=" + dateOfContractTermination +
+                ", datePaymentDue=" + datePaymentDue +
+                ", dateInterestPaymentDue=" + dateInterestPaymentDue +
+                ", interestPaymentFrequency=" + interestPaymentFrequency +
+                ", oldMemberCode='" + oldMemberCode + '\'' +
+                ", oldAccountNumber='" + oldAccountNumber + '\'' +
+                ", amountOutstanding='" + amountOutstanding + '\'' +
+                ", guarantorIndicator='" + guarantorIndicator + '\'' +
+                ", volumeOfDebtSecuredByGuarantee='" + volumeOfDebtSecuredByGuarantee + '\'' +
+                ", guaranteeSum='" + guaranteeSum + '\'' +
+                ", guaranteeTem=" + guaranteeTem +
+                ", bankGuaranteeIndicator='" + bankGuaranteeIndicator + '\'' +
+                ", volumeOfDebtSecuredByBankGuarantee='" + volumeOfDebtSecuredByBankGuarantee + '\'' +
+                ", bankGuaranteeSum='" + bankGuaranteeSum + '\'' +
+                ", bankGuaranteeTem='" + bankGuaranteeTem + '\'' +
+                ", collateralValue='" + collateralValue + '\'' +
+                ", collateralDate=" + collateralDate +
+                ", collateralAgreementExpirationDate=" + collateralAgreementExpirationDate +
+                ", overallValueOfCredit='" + overallValueOfCredit + '\'' +
+                ", rightOfClaimAcquirersNames='" + rightOfClaimAcquirersNames + '\'' +
+                ", rightOfClaimAcquirersRegistrationData='" + rightOfClaimAcquirersRegistrationData + '\'' +
+                ", rightOfClaimAcquirersTaxpayerID=" + rightOfClaimAcquirersTaxpayerID +
+                ", rightOfClaimAcquirersSocialInsuranceNumber=" + rightOfClaimAcquirersSocialInsuranceNumber +
+                ", completePerformanceOfObligationsDate=" + completePerformanceOfObligationsDate +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = getSegmentTag().hashCode();
         result = 31 * result + getMemberCode().hashCode();
@@ -515,5 +563,8 @@ public class TransactionSegment {
         result = 31 * result + (getRightOfClaimAcquirersSocialInsuranceNumber() != null ? getRightOfClaimAcquirersSocialInsuranceNumber().hashCode() : 0);
         result = 31 * result + (getCompletePerformanceOfObligationsDate() != null ? getCompletePerformanceOfObligationsDate().hashCode() : 0);
         return result;
+
+
+
     }
 }

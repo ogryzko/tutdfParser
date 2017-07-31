@@ -81,6 +81,19 @@ public class TUTDFEntry {
     }
 
     @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TUTDFEntry{");
+        sb.append("headerSegment=").append(headerSegment);
+        sb.append(", idSegmentList=").append(idSegmentList);
+        sb.append(", nameSegment=").append(nameSegment);
+        sb.append(", phoneNumberSegmentList=").append(phoneNumberSegmentList);
+        sb.append(", transactionSegment=").append(transactionSegment);
+        sb.append(", trlrSegment=").append(trlrSegment);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
     public int hashCode() {
         int result = getHeaderSegment().hashCode();
         result = 31 * result + getIdSegmentList().hashCode();
@@ -89,5 +102,7 @@ public class TUTDFEntry {
         result = 31 * result + (getTransactionSegment() != null ? getTransactionSegment().hashCode() : 0);
         result = 31 * result + getTrlrSegment().hashCode();
         return result;
+
+
     }
 }

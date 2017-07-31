@@ -41,4 +41,13 @@ public class TRLRSegment {
         result = 31 * result + (getCounter() != null ? getCounter().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TRLRSegment{");
+        sb.append("trailerSegment='").append(trailerSegment).append('\'');
+        sb.append(", Counter=").append(Counter);
+        sb.append('}');
+        return sb.toString();
+    }
 }

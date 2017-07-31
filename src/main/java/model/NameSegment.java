@@ -171,4 +171,23 @@ public class NameSegment {
         result = 31 * result + (getOldFirstName() != null ? getOldFirstName().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "NameSegment{" +
+                "segmentTag='" + segmentTag + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymicName='" + patronymicName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", emptyField1=" + emptyField1 +
+                ", dateOfBirth=" + dateOfBirth +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", emptyField2='" + emptyField2 + '\'' +
+                ", emptyField3=" + emptyField3 +
+                ", emptyField4=" + emptyField4 +
+                ", remarks=" + remarks +
+                ", oldSurname='" + oldSurname + '\'' +
+                ", oldFirstName='" + oldFirstName + '\'' +
+                '}';
+    }
 }
